@@ -1,0 +1,8 @@
+{
+  "name": "iron-subscription",
+  "description": "subscription manager for iron-router",
+  "homepage": "https://github.com/particle4dev/iron-subscription",
+  "author": "Le Hoang (https://github.com/particle4dev)",
+  "version": "0.1.1",
+  "git": "https://github.com/particle4dev/iron-subscription.git"
+}
