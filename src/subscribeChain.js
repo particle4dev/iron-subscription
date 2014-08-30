@@ -84,13 +84,13 @@ _.extend(SubscribeChain.prototype, {
 
         self._handles[registerName] = Meteor.subscribe(name, param, {
             onError: function (error) {
-                DEBUGX.error('[subscriptions][SubscribeChain]', registerName);
+                console.error('[subscriptions][SubscribeChain]', registerName);
                 self.stop();
                 if(self._onError)
                     self._onError.call(this, error, registerName);
             },
             onReady: function () {
-                DEBUGX.info('[subscriptions][SubscribeChain]', registerName);
+                console.info('[subscriptions][SubscribeChain]', registerName);
                 self.load();
             }
         });
