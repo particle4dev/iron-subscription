@@ -1,7 +1,7 @@
 SubscribeChain = function(opt){
     var self = this;
     if (self._init) {
-        self._init.apply(self, [opt]);
+        self._init(opt);
     }
 };
 _.extend(SubscribeChain.prototype, {
@@ -10,8 +10,7 @@ _.extend(SubscribeChain.prototype, {
         var self = this;
         self._subscribeList = {};
         self._handles = {};
-        opt = opt | {};
-
+        opt = opt || {};
         if(!_.isUndefined(opt.autoload))
             self._autoload = !!opt.autoload;
         else
