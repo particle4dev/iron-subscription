@@ -18,6 +18,10 @@ _.extend(SubscribeChain.prototype, {
         self._isRun = false;
         self._currentSubscribeItem = null;
         self._readyDeps = new Deps.Dependency;
+
+        this._start = _.once(function () {
+            this.load(); 
+        }.bind(this));
     },
     destruct: function(){
         var self = this;
@@ -58,7 +62,7 @@ _.extend(SubscribeChain.prototype, {
 
         if(self._autoload && !self._isRun){
             Meteor.setTimeout(function(){
-                self.load();
+                self._start();
             }, 0);
         }
     },
@@ -69,7 +73,7 @@ _.extend(SubscribeChain.prototype, {
             if(!v && this._subscribeList[k] && !key){
                 // check dependence
                 var depSub = this._handles[this._subscribeList[k].after];
-                if((depSub && depSub.ready()) || !depSub) {
+                if((depSub && depSub.ready()) || !this._subscribeList[k].after) {
                     key = k;
                 }
             }
