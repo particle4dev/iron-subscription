@@ -1,7 +1,7 @@
 SubscribeChain = function(opt){
     var self = this;
     if (self._init) {
-        self._init.apply(self, [opt]);
+        self._init(opt);
     }
 };
 _.extend(SubscribeChain.prototype, {
@@ -10,8 +10,7 @@ _.extend(SubscribeChain.prototype, {
         var self = this;
         self._subscribeList = {};
         self._handles = {};
-        opt = opt | {};
-
+        opt = opt || {};
         if(!_.isUndefined(opt.autoload))
             self._autoload = !!opt.autoload;
         else
@@ -19,6 +18,9 @@ _.extend(SubscribeChain.prototype, {
         self._isRun = false;
         self._currentSubscribeItem = null;
         self._readyDeps = new Deps.Dependency();
+        this._start = _.once(function () {
+            this.load();
+        }.bind(this));
     },
     destruct: function(){
         var self = this;
@@ -59,7 +61,7 @@ _.extend(SubscribeChain.prototype, {
 
         if(self._autoload && !self._isRun){
             Meteor.setTimeout(function(){
-                self.load();
+                self._start();
             }, 0);
         }
     },
@@ -70,7 +72,7 @@ _.extend(SubscribeChain.prototype, {
             if(!v && this._subscribeList[k] && !key){
                 // check dependence
                 var depSub = this._handles[this._subscribeList[k].after];
-                if((depSub && depSub.ready()) || !depSub) {
+                if((depSub && depSub.ready()) || !this._subscribeList[k].after) {
                     key = k;
                 }
             }
@@ -84,13 +86,13 @@ _.extend(SubscribeChain.prototype, {
 
         self._handles[registerName] = Meteor.subscribe(name, param, {
             onError: function (error) {
-                DEBUGX.error('[subscriptions][SubscribeChain]', registerName);
+                console.error('[subscriptions][SubscribeChain]', registerName);
                 self.stop();
                 if(self._onError)
                     self._onError.call(this, error, registerName);
             },
             onReady: function () {
-                DEBUGX.info('[subscriptions][SubscribeChain]', registerName);
+                console.info('[subscriptions][SubscribeChain]', registerName);
                 self.load();
             }
         });

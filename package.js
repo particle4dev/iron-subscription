@@ -1,6 +1,7 @@
 Package.describe({
     summary: "subscription-manager for iron router",
-    version: "0.1.1",
+    version: "1.0.0",
+    name: "particle4dev:iron-subscription",
     git: "https://github.com/particle4dev/iron-subscription.git"
 });
 
@@ -11,7 +12,7 @@ var server = ['server'];
 
 Package.on_use(function(api) {
     api.versionsFrom("METEOR@0.9.0");
-    api.use('underscore', client);
+    api.use(['underscore', 'deps'],  client);
     api.add_files([
         'src/subscribeReactive.js',
         'src/subscribeChain.js',
