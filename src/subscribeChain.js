@@ -18,7 +18,7 @@ _.extend(SubscribeChain.prototype, {
             self._autoload = true;
         self._isRun = false;
         self._currentSubscribeItem = null;
-        self._readyDeps = new Deps.Dependency;
+        self._readyDeps = new Deps.Dependency();
     },
     destruct: function(){
         var self = this;
@@ -41,7 +41,7 @@ _.extend(SubscribeChain.prototype, {
         var self = this,
         ready = null;
         _.each(self._handles, function(v, k){
-            if (v && ready != false) {
+            if (v && ready !== false) {
                 ready = self._handles[k].ready();
             }
         });
@@ -80,7 +80,7 @@ _.extend(SubscribeChain.prototype, {
     },
     subscribe: function(name, param){
         var self = this;
-        var registerName = (self._currentSubscribeItem != null) ? self._currentSubscribeItem: name;
+        var registerName = (self._currentSubscribeItem !== null) ? self._currentSubscribeItem: name;
 
         self._handles[registerName] = Meteor.subscribe(name, param, {
             onError: function (error) {
@@ -102,13 +102,13 @@ _.extend(SubscribeChain.prototype, {
         if (sub) {
             self._subscribeList[sub].func.call(self, sub);
         }
-        else if (sub == null && self.ready()) {
+        else if (sub === null && self.ready()) {
             if(self._onReady)
                 self._onReady.call(self);
             self._isRun = false;
             self._readyDeps.changed();
         }
-        else if (sub == null)
+        else if (sub === null)
             Meteor.setTimeout(function(){
                 self.load();
             }, 0);

@@ -12,7 +12,7 @@ var OPTIONS = {
 
 SubscribeReactive = function(opt){
     var self = this;
-    self._deps = new Deps.Dependency;
+    self._deps = new Deps.Dependency();
     self._options = {};
     self._query = {};
     _.each(opt, function(v, k){
@@ -105,8 +105,8 @@ _.extend(SubscribeReactive.prototype, {
             throw new Error('key must be a string');
         if(!_.isUndefined(self._query[key])){
             self._query[key] = null;
-            delete self._query[key]
-        }            
+            delete self._query[key];
+        }
     },
     /**
      * Reactive
