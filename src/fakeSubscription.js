@@ -1,4 +1,4 @@
-var FakeSubscription = (function(){
+FakeSubscription = (function(){
     var dep_ = new Deps.Dependency(),
     isReady = true,
     currentRouterName = null,

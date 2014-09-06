@@ -1,6 +1,6 @@
 Package.describe({
     summary: "subscription-manager for iron router",
-    version: "1.0.0",
+    version: "1.1.0",
     name: "particle4dev:iron-subscription",
     git: "https://github.com/particle4dev/iron-subscription.git"
 });
@@ -22,6 +22,7 @@ Package.on_use(function(api) {
         api.export('SubscribeReactive', client);
         api.export('SubscribeChain', client);
         api.export('SubscribeGlobal', client);
+        api.export('FakeSubscription', client);
     }
 });
 
