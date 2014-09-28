@@ -3,13 +3,14 @@ SubscribeGlobal = (function(){
     return {
         subscribe: function(router /* same as Meteor.subscribe */){
             var self = router;
+            // https://github.com/EventedMind/iron-router/blob/bb5a9308b34dea74cb71235190b98b7c7f5e5d52/lib/route_controller_client.js#L240
             var waitApi = (function () {
                 var added = false;
                 return {
                     wait: function () {
                         // make idempotent
                         if (!added) {
-                            self._waitList.push(this);
+                            self.wait(this);
                             added = true;
                         }
                     }
