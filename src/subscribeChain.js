@@ -17,7 +17,7 @@ _.extend(SubscribeChain.prototype, {
             self._autoload = true;
         self._isRun = false;
         self._currentSubscribeItem = null;
-        self._readyDeps = new Deps.Dependency();
+        self._readyDeps = new Tracker.Dependency();
         this._start = _.once(function () {
             this.load();
         }.bind(this));
@@ -60,7 +60,7 @@ _.extend(SubscribeChain.prototype, {
         this._handles[obj.name] = null;
 
         if(self._autoload && !self._isRun){
-            Meteor.setTimeout(function(){
+            setTimeout(function(){
                 self._start();
             }, 0);
         }
@@ -111,7 +111,7 @@ _.extend(SubscribeChain.prototype, {
             self._readyDeps.changed();
         }
         else if (sub === null)
-            Meteor.setTimeout(function(){
+            setTimeout(function(){
                 self.load();
             }, 0);
     },
