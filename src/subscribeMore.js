@@ -117,6 +117,24 @@ _.extend(SubscribeMore.prototype, {
      */
     nextLoadMore: function (callback) {
         this._generateParam = callback;
+    },
+    /**
+     * 
+     * Get param that will send with sub
+     * @param {} 
+     * @return {}
+     */
+    getParam: function () {
+        return this._lastParam;
+    },
+    /**
+     * 
+     * Set a param that will send with sub
+     * @param {} 
+     * @return {}
+     */
+    setParam: function (obj) {
+        this._lastParam = obj;
     }
 });
 
