@@ -36,6 +36,7 @@ _.extend(SubscribeMore.prototype, {
             var sub = this._doSubscribe(this._lastParam);
             this._subscribeList.push(sub);
             // FIXME: check sub
+            // what about if sub is error ???
             // ready
             // stop
             this._isStarted = true;
@@ -135,6 +136,47 @@ _.extend(SubscribeMore.prototype, {
      */
     setParam: function (obj) {
         this._lastParam = obj;
+    },
+
+
+
+    /**
+     * How many sub now ?
+     * @param {} 
+     * @return {}
+     */
+    getLength: function () {
+        return this._subscribeList.length;
+    },
+    /**
+     * How many sub now ?
+     * @param {} 
+     * @return {}
+     */
+    stopOldSubscription: function (number) {
+        if(!_.isNumber(number))
+            throw new Error('param must be a number');
+        if(number > this.getLength())
+            throw new Error('param must be a number');
+        var tmp = null, index;
+        for (var i = 0; i < number; i++) {
+            tmp = this._subscribeList[i];
+            // we only stop subscription if it is not in _waitOnReadySubscribeList (it can be re-run router
+            // if we remove any subscription in _waitOnReadySubscribeList )
+            index = this._waitOnReadySubscribeList.indexOf(tmp);
+            if(index == -1) {
+                tmp.stop();
+
+                delete this._subscribeList[i];
+                this._subscribeList[i] = null;
+                this._subscribeList.splice(i, 1);                
+                delete tmp;
+                tmp = null;
+            }
+            else {
+                number ++;
+            }
+        };
     }
 });
 
