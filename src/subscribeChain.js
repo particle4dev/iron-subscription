@@ -80,11 +80,12 @@ _.extend(SubscribeChain.prototype, {
         self._currentSubscribeItem = key;
         return key;
     },
-    subscribe: function(name, param){
+    subscribe: function(name){
         var self = this;
         var registerName = (self._currentSubscribeItem !== null) ? self._currentSubscribeItem: name;
+        var params = Array.prototype.slice.call(arguments);
 
-        self._handles[registerName] = Meteor.subscribe(name, param, {
+        params.push({
             onError: function (error) {
                 console.error('[subscriptions][SubscribeChain]', registerName);
                 self.stop();
@@ -96,6 +97,7 @@ _.extend(SubscribeChain.prototype, {
                 self.load();
             }
         });
+        self._handles[registerName] = Meteor.subscribe.apply(Meteor, params);
     },
     load: function(){
         var self = this;
