@@ -11,7 +11,7 @@ var client = ['client'];
 var server = ['server'];
 
 Package.on_use(function(api) {
-    api.versionsFrom("METEOR@0.9.0");
+    api.versionsFrom('1.0');
     api.use(['underscore', 'tracker'],  client);
     api.add_files([
         'src/fakeSubscription.js',
