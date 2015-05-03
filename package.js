@@ -1,6 +1,6 @@
 Package.describe({
     summary: "subscription-manager for iron router",
-    version: "1.2.4",
+    version: "1.2.5",
     name: "particle4dev:iron-subscription",
     git: "https://github.com/particle4dev/iron-subscription.git"
 });

@@ -30,8 +30,10 @@ _.extend(SubscribeMore.prototype, {
      * @param {} 
      * @return {}
      */
-    start: function () {
+    start: function (param) {
         if(!this._isStarted) {
+            if(param)
+                this._lastParam = param;
             this._lastParam = this._generateParam(this._lastParam);
             var sub = this._doSubscribe(this._lastParam);
             this._subscribeList.push(sub);
